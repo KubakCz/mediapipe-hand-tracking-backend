@@ -1,0 +1,6 @@
+@mediapipe_hand_tracking_backend_HostAddress = http://localhost:5184
+
+GET {{mediapipe_hand_tracking_backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
