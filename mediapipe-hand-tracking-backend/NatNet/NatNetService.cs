@@ -7,7 +7,7 @@ public class NatNetService
 {
     private readonly NatNetClientML client = new NatNetClientML();
     public NatNetConnectionSettings? ConnectionSettings { get; private set; } = new NatNetConnectionSettings();
-    public bool IsRecording { get; set; } = false;
+    public bool IsRecording { get; private set; } = false;
     public bool IsConnected => ConnectionSettings != null;
 
     public NatNetService()
@@ -35,7 +35,7 @@ public class NatNetService
             ServerDataPort = connectionSettings.DataPort
         };
         int result = client.Connect(connectOptions);
-        
+
         if (result != 0)
         {
             Console.WriteLine("Failed to connect to the NatNet server.");
@@ -47,5 +47,45 @@ public class NatNetService
             ConnectionSettings = connectionSettings;
             return true;
         }
+    }
+
+    public NatNetErrorCode StartRecording()
+    {
+        if (IsRecording)
+            throw new InvalidOperationException("Recording already in progress.");
+
+        int nBytes = 0;
+        byte[] response = new byte[1000];
+        NatNetErrorCode ec = (NatNetErrorCode)client.SendMessageAndWait("StartRecording", 3, 100, out response, out nBytes);
+
+        if (ec is not NatNetErrorCode.OK)
+            return ec;
+
+        int opResult = BitConverter.ToInt32(response, 0);
+        if (opResult != 0)
+            return (NatNetErrorCode)opResult;
+
+        IsRecording = true;
+        return NatNetErrorCode.OK;
+    }
+
+    public NatNetErrorCode StopRecording()
+    {
+        if (!IsRecording)
+            throw new InvalidOperationException("Recording not in progress.");
+
+        int nBytes = 0;
+        byte[] response = new byte[1000];
+        NatNetErrorCode ec = (NatNetErrorCode)client.SendMessageAndWait("StopRecording", 3, 100, out response, out nBytes);
+
+        if (ec is not NatNetErrorCode.OK)
+            return ec;
+
+        int opResult = BitConverter.ToInt32(response, 0);
+        if (opResult != 0)
+            return (NatNetErrorCode)opResult;
+
+        IsRecording = false;
+        return NatNetErrorCode.OK;
     }
 }
