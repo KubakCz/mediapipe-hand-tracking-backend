@@ -27,12 +27,19 @@ namespace MediapipeHandTrackingBackend.Controllers
 
         // POST: api/ConnectionSettings
         [HttpPost]
-        public ActionResult Post(NatNetConnectionSettings connectionSettings)
+        public ActionResult PostConnectionSettings(NatNetConnectionSettings connectionSettings)
         {
             bool result = natNetService.TryConnectToServer(connectionSettings);
             if (!result)
                 return StatusCode(503, "Unable to connect to the server. Please ensure that the server is running and the connection settings are correct.");
             return Ok("Successfully connected to the NatNet server.");
+        }
+
+        // POST: api/ConnectionSettings/Default
+        [HttpPost("Default")]
+        public ActionResult PostDefaultConnectionSettings()
+        {
+            return PostConnectionSettings(new NatNetConnectionSettings());
         }
     }
 }
