@@ -20,7 +20,8 @@ builder.Services.AddCors(options =>
     });
 
 // Add NatNetService to the container
-builder.Services.AddSingleton<NatNetService>();
+var natNetService = new NatNetService();
+builder.Services.AddSingleton<NatNetService>(natNetService);
 
 // Setup JSON serialization
 builder.Services.AddControllers().AddJsonOptions(options =>

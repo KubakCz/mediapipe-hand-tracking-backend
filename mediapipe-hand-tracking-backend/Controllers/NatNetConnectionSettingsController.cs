@@ -31,7 +31,7 @@ namespace MediapipeHandTrackingBackend.Controllers
         {
             bool result = natNetService.TryConnectToServer(connectionSettings);
             if (!result)
-                return StatusCode(503, "Unable to connect to the server. Please ensure that the server is running and the connection settings are correct.");
+                return StatusCode(503, "Unable to connect to the NatNet server. Please ensure that the server is running and the connection settings are correct.");
             return Ok("Successfully connected to the NatNet server.");
         }
 

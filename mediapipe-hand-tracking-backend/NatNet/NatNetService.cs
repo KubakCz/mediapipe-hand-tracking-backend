@@ -6,7 +6,7 @@ namespace MediaPipeHandTrackingBackend.NatNet;
 public class NatNetService
 {
     private readonly NatNetClientML client = new NatNetClientML();
-    public NatNetConnectionSettings? ConnectionSettings { get; private set; } = new NatNetConnectionSettings();
+    public NatNetConnectionSettings? ConnectionSettings { get; private set; }
     public bool IsRecording { get; private set; } = false;
     public bool IsConnected => ConnectionSettings != null;
 
@@ -25,7 +25,7 @@ public class NatNetService
             ConnectionSettings = null;
         }
 
-        Console.WriteLine($"\nConnecting to a NatNet server...\n{ConnectionSettings}");
+        Console.WriteLine($"\nConnecting to a NatNet server...\n{connectionSettings}");
         var connectOptions = new NatNetClientML.ConnectParams()
         {
             ConnectionType = connectionSettings.ConnectionType,
