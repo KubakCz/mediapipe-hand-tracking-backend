@@ -16,7 +16,7 @@ namespace MediapipeHandTrackingBackend.Controllers
             natNetService = service;
         }
 
-        // GET: api/ConnectionSettings
+        // GET: api/NatNetConnectionSettings
         [HttpGet]
         public ActionResult<NatNetConnectionSettings> GetConnectionSettings()
         {
@@ -25,7 +25,7 @@ namespace MediapipeHandTrackingBackend.Controllers
             return natNetService.ConnectionSettings;
         }
 
-        // POST: api/ConnectionSettings
+        // POST: api/NatNetConnectionSettings
         [HttpPost]
         public ActionResult PostConnectionSettings(NatNetConnectionSettings connectionSettings)
         {
@@ -35,7 +35,14 @@ namespace MediapipeHandTrackingBackend.Controllers
             return Ok("Successfully connected to the NatNet server.");
         }
 
-        // POST: api/ConnectionSettings/Default
+        // POST: api/NatNetConnectionSettings/Default
+        [HttpGet("Default")]
+        public NatNetConnectionSettings GetDefaultConnectionSettings()
+        {
+            return new NatNetConnectionSettings();
+        }
+
+        // POST: api/NatNetConnectionSettings/Default
         [HttpPost("Default")]
         public ActionResult PostDefaultConnectionSettings()
         {
