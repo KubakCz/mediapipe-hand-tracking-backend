@@ -25,6 +25,8 @@ namespace MediapipeHandTrackingBackend.Controllers
         [HttpPost]
         public ActionResult PostRecording(bool recording)
         {
+            Console.WriteLine($"Trying to {(recording ? "start" : "stop")} recording...");
+
             if (!natNetService.IsConnected)
                 return Conflict("Not connected to a NatNet server.");
             if (recording == natNetService.IsRecording)
@@ -40,6 +42,8 @@ namespace MediapipeHandTrackingBackend.Controllers
                 return StatusCode(503, $"Unable to connect to the server. Please ensure that the server is running and the connection settings are correct.");
             if (result != NatNetErrorCode.OK)
                 return StatusCode(500, $"Failed to {(recording ? "start" : "stop")} recording. Error code: {result}");
+
+            Console.WriteLine($"Recording {(recording ? "started" : "stopped")}.");
             return Ok(recording ? "Recording started." : "Recording stopped.");
         }
     }

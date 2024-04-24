@@ -51,6 +51,8 @@ public class NatNetService
 
     public NatNetErrorCode StartRecording()
     {
+        if (!IsConnected)
+            throw new InvalidOperationException("Not connected to a server.");
         if (IsRecording)
             throw new InvalidOperationException("Recording already in progress.");
 
@@ -71,6 +73,8 @@ public class NatNetService
 
     public NatNetErrorCode StopRecording()
     {
+        if (!IsRecording)
+            throw new InvalidOperationException("Recording not in progress.");
         if (!IsRecording)
             throw new InvalidOperationException("Recording not in progress.");
 
