@@ -3,6 +3,9 @@ using NatNetML;
 
 namespace MediaPipeHandTrackingBackend.NatNet;
 
+/// <summary>
+/// Service for connecting to a NatNet server and sending commands to it.
+/// </summary>
 public class NatNetService
 {
     private readonly NatNetClientML client = new NatNetClientML();
@@ -17,14 +20,21 @@ public class NatNetService
         TryConnectToServer(new NatNetConnectionSettings());  // Try to connect to the server with default settings
     }
 
+    /// <summary>
+    /// Tries to connect to a NatNet server with the given connection settings.
+    /// </summary>
+    /// <param name="connectionSettings">Connection settings for the server.</param>
+    /// <returns>True if the connection was successful, false otherwise.</returns>
     public bool TryConnectToServer(NatNetConnectionSettings connectionSettings)
     {
+        // Disconnect from the current server if connected
         if (IsConnected)
         {
             client.Disconnect();
             ConnectionSettings = null;
         }
 
+        // Try to connect to the new server
         Console.WriteLine($"\nConnecting to a NatNet server...\n{connectionSettings}");
         var connectOptions = new NatNetClientML.ConnectParams()
         {
@@ -49,6 +59,11 @@ public class NatNetService
         }
     }
 
+    /// <summary>
+    /// Starts recording on the connected NatNet server.
+    /// </summary>
+    /// <returns>Result code of the operation.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when not connected to a server or recording is already in progress.</exception>
     public NatNetErrorCode StartRecording()
     {
         if (!IsConnected)
@@ -71,6 +86,11 @@ public class NatNetService
         return NatNetErrorCode.OK;
     }
 
+    /// <summary>
+    /// Stops recording on the connected NatNet server.
+    /// </summary>
+    /// <returns>Result code of the operation.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when not connected to a server or recording is not in progress.</exception>
     public NatNetErrorCode StopRecording()
     {
         if (!IsRecording)

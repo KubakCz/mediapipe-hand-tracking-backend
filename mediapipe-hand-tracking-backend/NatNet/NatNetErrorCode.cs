@@ -1,5 +1,8 @@
 ﻿namespace MediaPipeHandTrackingBackend.NatNet;
 
+/// <summary>
+/// Error codes returned by the NatNet SDK.
+/// </summary>
 public enum NatNetErrorCode
 {
     OK,
@@ -13,6 +16,9 @@ public enum NatNetErrorCode
 
 public static class NatNetErrorCodeExtensions
 {
+    /// <summary>
+    /// Returns a human-readable description of the error code.
+    /// </summary>
     public static string Description(this NatNetErrorCode error) => error switch
     {
         NatNetErrorCode.OK => "Operation successful",

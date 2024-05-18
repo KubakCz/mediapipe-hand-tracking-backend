@@ -23,7 +23,7 @@ builder.Services.AddCors(options =>
 
 // Add NatNetService to the container
 var natNetService = new NatNetService();
-builder.Services.AddSingleton<NatNetService>(natNetService);
+builder.Services.AddSingleton(natNetService);
 
 // Setup JSON serialization
 builder.Services.AddControllers().AddJsonOptions(options =>

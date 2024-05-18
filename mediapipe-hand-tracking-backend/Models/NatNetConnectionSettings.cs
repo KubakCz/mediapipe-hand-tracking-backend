@@ -4,8 +4,12 @@ using NatNetML;
 
 namespace MediaPipeHandTrackingBackend.Models;
 
+/// <summary>
+/// Connection settings for the NatNet server.
+/// </summary>
 public class NatNetConnectionSettings
 {
+    // Default values for the connection settings
     [IPAddress]
     public string LocalIP { get; set; } = "127.0.0.1";
     [IPAddress]
@@ -20,6 +24,10 @@ public class NatNetConnectionSettings
     }
 }
 
+/// <summary>
+/// Attribute for validating IP address strings.
+/// Used for checking if the recived IP address in set request is valid.
+/// </summary>
 public class IPAddressAttribute : ValidationAttribute
 {
     protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
